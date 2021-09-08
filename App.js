@@ -2,7 +2,7 @@
 import React,{useRef, useMemo, useState, useEffect} from 'react';
 import { FlatList, StyleSheet, Text, View ,SafeAreaView} from 'react-native';
 import ListItems from './components/ListItems';
-import { SAMPLE_DATA } from "./assets/data/sampleData";
+;
 import {
   BottomSheetModal,
   BottomSheetModalProvider,
@@ -90,7 +90,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+   //backgroundColor: '#EFE9E8',
    
   },
   largeTitle:{

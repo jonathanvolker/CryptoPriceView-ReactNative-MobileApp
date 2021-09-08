@@ -34,7 +34,7 @@ const styles= StyleSheet.create({
 
 itemWrapper:{
     paddingHorizontal:16,
-    marginTop:24,
+    marginTop:30,
     flexDirection: "row",
     justifyContent:"space-between",
     alignItems:"center",

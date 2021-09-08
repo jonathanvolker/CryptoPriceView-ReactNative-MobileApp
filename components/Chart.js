@@ -1,20 +1,30 @@
-import React from 'react'
+import React,{useEffect, useState} from 'react'
 import { View, Text, StyleSheet,Image,Dimensions } from 'react-native'
 import {ChartDot, ChartPath, ChartPathProvider,ChartYLabel} from '@rainbow-me/animated-charts';
+import { useSharedValue } from 'react-native-reanimated';
 
 export const {width: SIZE} = Dimensions.get('window');
 
 export default function Chart({symbol,currentPrice,logoUrl, name,price_change_percentage_7d_in_currency,sparkline_in_7d}) {
-    const priceChangeColor = price_change_percentage_7d_in_currency< 0 ? "green" : "red";
-   
-    
-const formatUSD = value => {
-    'worklet';
-    if (value === '') {
-      return `$${currentPrice.toLocaleString("en-US",{currency:"USD"} )} `;
-    }
+    const latesCurrentPrice = useSharedValue(currentPrice);
+    const [chartReady, setChartReady] = useState(false)
 
-    const formatedValue = `$${parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g,"$&,")}`
+    useEffect(() => {
+        latesCurrentPrice.value = currentPrice;
+        setTimeout(()=>{
+            setChartReady(true);
+        },0)
+
+    }, [currentPrice])
+ 
+    const priceChangeColor = price_change_percentage_7d_in_currency< 0 ? "green" : "red";
+    
+    const formatUSD = value => {
+        'worklet';
+        if (value === '') {
+        return `$${latesCurrentPrice.value.toLocaleString("en-US",{currency:"USD"} )} `;
+        }
+        const formatedValue = `$${parseFloat(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g,"$&,")}`
 
     return formatedValue
   };
@@ -41,10 +51,13 @@ const formatUSD = value => {
                         <Text style={[styles.title,{color:priceChangeColor}]} >{price_change_percentage_7d_in_currency.toFixed(4)}% </Text>
                     </View>
                 </View>
-                <View style={styles.chartLineWrapper}>
+                {chartReady?
+                (<View style={styles.chartLineWrapper}>
                     <ChartPath height={SIZE / 2} stroke="black" width={SIZE} />
                     <ChartDot style={{ backgroundColor: 'black' }} />
-                </View>
+                </View>)
+                : null    
+            }
             </View>
         </ChartPathProvider>
     )
