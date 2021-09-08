@@ -1,5 +1,5 @@
 
-import React,{useRef, useMemo, useState} from 'react';
+import React,{useRef, useMemo, useState, useEffect} from 'react';
 import { FlatList, StyleSheet, Text, View ,SafeAreaView} from 'react-native';
 import ListItems from './components/ListItems';
 import { SAMPLE_DATA } from "./assets/data/sampleData";
@@ -8,7 +8,7 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 import Chart from './components/Chart';
-
+import {getMarketData} from './services/cryptoService' 
 
 const ListHeader = () =>( 
   <>
@@ -21,7 +21,16 @@ const ListHeader = () =>(
 
 export default function App() {
   const [selecteCoinData, setSelecteCoinData] = useState(null)
- 
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const FetchMarketData = async ()=>{
+      const marketData = await getMarketData();
+      setData(marketData);
+    }
+
+    FetchMarketData();
+   
+  }, [])
  
   const bottomSheetModalRef = useRef(null);
   const snapPoints = useMemo(() => [ '50%'], []);
@@ -37,7 +46,7 @@ export default function App() {
      
       <FlatList 
         keyExtractor={ (item)=> item.id }
-        data={SAMPLE_DATA}
+        data={data}
         renderItem={({item})=>(
           <ListItems
           name={ item.name}
