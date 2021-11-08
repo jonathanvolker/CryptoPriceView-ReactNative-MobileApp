@@ -1,3 +1,15 @@
-# CryptoTracker a una pequeña app hibrida que se encarca de listar los precios de cryptomonedas desde una API externa.
+# CryptoTracker App -Android cryptoView price-
 
-npm isntall => npm start
+FrontEnd: React  / Material UI 
+
+Api: CoinGeko
+
+### Objective
+
+- List price of criptos
+
+#### Technologies applied:
+
+- [ ] React - Native
+- [ ] Material UI
+
